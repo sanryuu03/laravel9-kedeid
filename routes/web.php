@@ -26,10 +26,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/admin', [AdminKedeController::class, 'index'] );
-Route::get('/admin/login', [AdminKedeController::class, 'login'] );
+Route::get('/admin/register', [AdminKedeController::class, 'register'])->name('register');
+Route::post('/admin/register', [AdminKedeController::class, 'register_action'])->name('register.action');
+Route::get('/admin/login', [AdminKedeController::class, 'login'] )->name('admin.login');
+Route::post('/admin/login', [AdminKedeController::class, 'login_action'] )->name('login.action');
+Route::get('/admin/logout', [AdminKedeController::class, 'logout'])->name('logout');
+
 Route::get('/admin/landingpageheader', [LandingPageHeaderController::class, 'index'] );
 Route::get('/admin/landingpagestatsdetail', [LandingPageStatsDetailController::class, 'index'] );
 Route::get('/admin/landingpagejenisproduk', [JenisProdukController::class, 'index'] );

@@ -43,39 +43,36 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 mx-auto">
-                                <div class="p-5">
-                                    <div class="text-center">
+                            <div class="col-md-6 mx-auto">
+                            <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Kede ID</h1>
-                                        <h3>Login Admin</h3>
+                                        <h3>Register</h3>
                                         <p class="text-gray-900">Selamat Datang</p>
                                     </div>
-                                    @if(session('success'))
-                                    <p class="alert alert-success">{{ session('success') }}</p>
-                                    @endif
-                                    @if($errors->any())
-                                    @foreach($errors->all() as $err)
-                                    <p class="alert alert-danger">{{ $err }}</p>
-                                    @endforeach
-                                    @endif
-                                    <form action="{{ route('login.action') }}" method="POST">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label>name <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="name" name="name" value="{{ old('name') }}" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>Password <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="password" name="password" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <button class="btn btn-primary">Login</button>
-                                            <a class="btn btn-danger" href="{{ route('welcome') }}">Back</a>
-                                        </div>
-                                    </form>
-                                    <hr>
-
-                                </div>
+                                @if($errors->any())
+                                @foreach($errors->all() as $err)
+                                <p class="alert alert-danger">{{ $err }}</p>
+                                @endforeach
+                                @endif
+                                <form action="{{ route('register.action') }}" method="POST">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label>Name <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="name" value="{{ old('name') }}" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>Password <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="password" name="password" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>Password Confirmation<span class="text-danger">*</span></label>
+                                        <input class="form-control" type="password" name="password_confirm" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <button class="btn btn-primary">Register</button>
+                                        <a class="btn btn-danger" href="{{  url('/admin') }}">Back</a>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
