@@ -60,6 +60,12 @@ class AdminKedeController extends Controller
             'name' => 'required',
             'password' => 'required',
         ]);
+
+        // jika belum login
+        if(auth()->check()){
+            return redirect()->intended('/admin/login');
+            // If the user only authenticated
+          }
         // jika berhasil loginkan
         if (Auth::attempt(['name' => $request->name, 'password' => $request->password])) {
             $request->session()->regenerate();
@@ -77,7 +83,7 @@ class AdminKedeController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect('/admin');
     }
 
     /**

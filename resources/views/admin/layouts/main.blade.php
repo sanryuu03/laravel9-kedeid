@@ -13,7 +13,27 @@
   <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ asset('css/ruang-admin.min.css') }}" rel="stylesheet">
 </head>
+@guest
+<style>
+.container {
+  position: relative;
+}
 
+.center {
+  position: absolute;
+  margin-top: 250px;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+}
+
+</style>
+<div class="container">
+<a class="btn btn-primary center" href="{{ route('admin.login') }}">Login</a>
+</div>
+@endguest
+@auth
 <body id="page-top">
   <div id="wrapper">
     <!-- Sidebar -->
@@ -89,7 +109,7 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -116,7 +136,7 @@
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                      <a href="{{ route('admin.login') }}" class="btn btn-primary">Logout</a>
+                      <a href="{{ route('logout') }}" class="btn btn-primary">Logout</a>
                   </div>
               </div>
           </div>
@@ -147,6 +167,7 @@
   <script src="{{ asset('js/ruang-admin.min.js') }}"></script>
   <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
   <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
+  @endauth
 </body>
 
 </html>
