@@ -14,9 +14,11 @@ class TutorialBelanjaController extends Controller
      */
     public function index()
     {
+        $tutorialBelanja = TutorialBelanja::get();
         return view('admin/tutorialbelanja', [
             "title" => "Sangrid - tutorialbelanja",
-            "creator" => "San"
+            "creator" => "San",
+            'tutorialBelanja' => $tutorialBelanja,
         ]);
     }
 
@@ -38,7 +40,12 @@ class TutorialBelanjaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'header' => 'required',
+            'link_youtube' => 'required',
+        ]);
+        TutorialBelanja::create($data);
+        return redirect()->route('tutorialbelanja');
     }
 
     /**
@@ -81,8 +88,10 @@ class TutorialBelanjaController extends Controller
      * @param  \App\Models\TutorialBelanja  $tutorialBelanja
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TutorialBelanja $tutorialBelanja)
+    public function destroy(TutorialBelanja $tutorialBelanja, $id)
     {
-        //
+        $tutorialBelanja = TutorialBelanja::find($id);
+        $tutorialBelanja->delete();
+        return redirect()->back();
     }
 }

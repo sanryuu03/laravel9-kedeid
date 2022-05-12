@@ -14,9 +14,11 @@ class WalletController extends Controller
      */
     public function index()
     {
+        $tutorialWallet = Wallet::get();
         return view('admin/tutorialwallet', [
             "title" => "Sangrid - tutorialwallet",
-            "creator" => "San"
+            "creator" => "San",
+            "tutorialWallet" => $tutorialWallet,
         ]);
     }
 
@@ -38,7 +40,12 @@ class WalletController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'header' => 'required',
+            'link_youtube' => 'required',
+        ]);
+        Wallet::create($data);
+        return redirect()->route('tutorialwallet');
     }
 
     /**
@@ -81,8 +88,10 @@ class WalletController extends Controller
      * @param  \App\Models\Wallet  $wallet
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Wallet $wallet)
+    public function destroy(Wallet $wallet, $id)
     {
-        //
+        $wallet = Wallet::find($id);
+        $wallet->delete();
+        return redirect()->back();
     }
 }

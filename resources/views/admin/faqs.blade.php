@@ -28,20 +28,24 @@
     </thead>
     <tbody>
             <tr>
-                {{-- <td><?= $no++ ?></td>
-                <td><?= $no++ ?></td>
-                <td><?= $item->nama ?></td>
-                <td><?= $item->kode ?></td>
-                <td><?= date('d-m-Y H:i:s',strtotime($item->created_at)) ?></td>
-                <td>
-                    <a href="<?= base_url('status/edit/'.$item->id) ?>" class="btn btn-primary btn-sm">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="#" class="btn btn-danger btn-sm delete" data-url="<?= base_url('status/delete/'.$item->id) ?>" data-toggle="modal" data-target="#deleteModal">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                </td> --}}
-
+                  <?php $no = 0;?>
+                  @foreach($faq as $item)
+                  <?php $no++ ;?>
+                  <tr>
+                      <td>{{ $no }}</td>
+                      <td>{{ $item->question }}</td>
+                      <td>{{ $item->answer }}</td>
+                      <td>{{ $item->created_at }}</td>
+                      <td>
+                      <form action="{{ route('faq.destroy', $item->id) }}" method="POST" class="inline-block">
+                          {!! method_field('post') . csrf_field() !!}
+                          <button type="submit" class="btn btn-danger">
+                              Delete
+                          </button>
+                      </form>
+                      </td>
+                  </tr>
+                  @endforeach
             </tr>
         </tbody>
     </table>

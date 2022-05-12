@@ -10,41 +10,69 @@
               <li class="breadcrumb-item active" aria-current="page">Testimoni</li>
           </ol>
       </div>
+  </div>
 
-<div class="container-fluid">
-    <h3 class="my-4">Testimoni</h3>
-    <a href="{{  url('/admin/formlandingpageaplikasikede') }}" class="btn btn-sm btn-primary mb-3">
-        <i class="fa fa-plus fa-sm"></i> Add
-    </a>
-    <table id="datatable" class="table table-bordered table-striped table-sm">
-        <thead class="bg-primary">
-        <tr>
-                <th>ID</th>
-                <th>No</th>
-                <th>Foto</th>
-                <th>Nama</th>
-                <th>Caption</th>
-                <th>Belanja Produk</th>
-        </tr>
-    </thead>
-    <tbody>
-            <tr>
-                {{-- <td><?= $item->id ?></td>
-                <td><?= $no++ ?></td>
-                <td>
-                    <img src="<?= base_url('uploads/pegawai/'.$item->foto) ?>" width="50" height="50" class="zoomImage" onclick="zoomImage('<?= base_url('uploads/pegawai/'.$item->foto) ?>')">
-                </td>
-                <td><?= $item->bagian ?></td>
-                <td><?= $item->bagian ?></td>
-                <td><?= $item->nidn ?></td> --}}
+  <div class="container-fluid">
+      <form method="post" action="{{ route('testimoni.post') }}" enctype="multipart/form-data">
+          {{ csrf_field() }}
+              <label>Foto Profil</label>
+              <br>
+              <input type="file" name="picture_path" class="form-control">
 
-            </tr>
-        </tbody>
-    </table>
+          <div class="form-group">
+              <label>Nama</label>
+              <input type="text" name="name" class="form-control">
+          </div>
+          <div class="form-group">
+              <label>Caption</label>
+              <input type="text" name="caption" class="form-control">
+          </div>
+          <div class="form-group">
+              <label>Belanja Produk</label>
+              <input type="text" name="buy" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">Save</button>
+      </form>
+  </div>
 
-
-
-</div>
-</div>
+  <div class="container-fluid">
+      <h3 class="my-4">Testimoni</h3>
+      <table id="datatable" class="table table-bordered table-striped table-sm">
+          <thead class="bg-primary">
+              <tr>
+                  <th>No</th>
+                  <th>Foto</th>
+                  <th>Nama</th>
+                  <th>Caption</th>
+                  <th>Belanja Produk</th>
+                  <th>Created At</th>
+                  <th>Aksi</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <?php $no = 0;?>
+                  @foreach($testimoni as $item)
+                  <?php $no++ ;?>
+                  <tr>
+                      <td>{{ $no }}</td>
+                      <td><img width="150px" src="{{ url('/storage/'.$item->picture_path) }}"></td>
+                      <td>{{ $item->name }}</td>
+                      <td>{{ $item->caption }}</td>
+                      <td>{{ $item->buy }}</td>
+                      <td>{{ $item->created_at }}</td>
+                      <td>
+                      <form action="{{ route('testimoni.destroy', $item->id) }}" method="POST" class="inline-block">
+                          {!! method_field('post') . csrf_field() !!}
+                          <button type="submit" class="btn btn-danger">
+                              Delete
+                          </button>
+                      </form>
+                      </td>
+                  </tr>
+                  @endforeach
+          </tbody>
+      </table>
+  </div>
   <!---Container Fluid-->
   @endsection

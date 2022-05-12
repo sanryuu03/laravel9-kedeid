@@ -17,7 +17,7 @@
           <div class="col">
               <div class="card mb-4">
                   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                      <h6 class="m-0 font-weight-bold text-primary">Monthly Recap Report</h6>
+                      <h6 class="m-0 font-weight-bold text-primary">gambar header</h6>
                       <div class="dropdown no-arrow">
                           <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -32,9 +32,30 @@
                       </div>
                   </div>
                   <div class="card-body">
-                      <div class="chart-area">
-                          <canvas id="myAreaChart"></canvas>
-                      </div>
+                      <table class="table table-bordered table-striped">
+                          <thead>
+                              <tr>
+                                  <th width="1%">File</th>
+                                  <th width="1%">OPSI</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              @foreach($gambar as $item)
+                              <tr>
+                                  <td><img width="150px" src="{{ url('/storage/'.$item->picture_path) }}"></td>
+                                  {{-- <td><a class="btn btn-danger" href="{{ route('header.destroy', $g->id) }}">HAPUS</a></td> --}}
+                                  <td>
+                                      <form action="{{ route('header.destroy', $item->id) }}" method="POST" class="inline-block">
+                                          {!! method_field('post') . csrf_field() !!}
+                                          <button type="submit" class="btn btn-danger">
+                                              Delete
+                                          </button>
+                                      </form>
+                                  </td>
+                              </tr>
+                              @endforeach
+                          </tbody>
+                      </table>
                   </div>
               </div>
           </div>
@@ -42,12 +63,25 @@
               <div class="card">
                   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                       <h6 class="m-0 font-weight-bold text-primary">Upload Gambar Header</h6>
-                      <form>
-                              <div class="form-group">
-                                  <label for="exampleFormControlFile1 mr-5">Pilih Gambar Header</label>
-                                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                              </div>
-                          </form>
+
+                      @if(count($errors) > 0)
+                      <div class="alert alert-danger">
+                          @foreach ($errors->all() as $error)
+                          {{ $error }} <br />
+                          @endforeach
+                      </div>
+                      @endif
+
+                      <form action="{{ route('upload.header') }}" method="POST" enctype="multipart/form-data">
+                          {{ csrf_field() }}
+
+                          <div class="form-group">
+                              <b>Pilih Gambar Header</b><br />
+                              <input type="file" name="picture_path">
+                          </div>
+
+                          <input type="submit" value="Upload" class="btn btn-primary">
+                      </form>
                   </div>
               </div>
           </div>

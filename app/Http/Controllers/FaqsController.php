@@ -14,9 +14,11 @@ class FaqsController extends Controller
      */
     public function index()
     {
+        $faq = Faqs::get();
         return view('admin/faqs', [
             "title" => "Sangrid - tutorialbelanja",
-            "creator" => "San"
+            "creator" => "San",
+            "faq" => $faq,
         ]);
     }
 
@@ -45,7 +47,12 @@ class FaqsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'question' => 'required',
+            'answer' => 'required',
+        ]);
+        Faqs::create($data);
+        return redirect()->route('faq');
     }
 
     /**
@@ -88,8 +95,10 @@ class FaqsController extends Controller
      * @param  \App\Models\Faqs  $faqs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Faqs $faqs)
+    public function destroy(Faqs $faqs, $id)
     {
-        //
+        $faqs = Faqs::find($id);
+        $faqs->delete();
+        return redirect()->back();
     }
 }

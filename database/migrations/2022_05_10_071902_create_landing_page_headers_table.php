@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('landing_page_headers', function (Blueprint $table) {
             $table->id();
-            $table->text('picturePath')->nullable();
+            $table->text('picture_path')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });

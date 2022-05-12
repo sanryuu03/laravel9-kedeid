@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LandingPageStatsDetail extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['caption_kiri','caption_tengah','caption_kanan'];
 }

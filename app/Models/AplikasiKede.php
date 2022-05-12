@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class AplikasiKede extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['title','caption','picture_path'];
 }

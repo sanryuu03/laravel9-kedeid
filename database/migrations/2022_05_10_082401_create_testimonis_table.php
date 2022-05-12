@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('testimonis', function (Blueprint $table) {
             $table->id();
             $table->text('header')->nullable();
-            $table->text('picturePath')->nullable();
+            $table->text('picture_path')->nullable();
             $table->text('name')->nullable();
             $table->text('caption')->nullable();
             $table->text('buy')->nullable();

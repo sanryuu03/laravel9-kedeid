@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class JenisProduk extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['caption','picture_path'];
 }

@@ -14,9 +14,11 @@ class AplikasiKedeController extends Controller
      */
     public function index()
     {
+        $aplikasiKede = AplikasiKede::get();
         return view('admin/landingpageaplikasikede', [
             "title" => "Sangrid - landingpageaplikasikede",
-            "creator" => "San"
+            "creator" => "San",
+            "aplikasiKede" => $aplikasiKede,
         ]);
     }
 
@@ -46,7 +48,31 @@ class AplikasiKedeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'caption' => 'required',
+            'picture_path' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+
+        ]);
+
+        // menyimpan data file yang diupload ke variabel $file
+        $file = $request->file('picture_path');
+        // dd($request->file('picture_path'));
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'storage';
+
+        // upload file
+        $file->move($tujuan_upload, $nama_file);
+
+        AplikasiKede::create([
+            "title" => $data['title'],
+            "caption" => $data['caption'],
+            'picture_path' => $nama_file,
+        ]);
+
+        return redirect()->route('aplikasikede.index');
     }
 
     /**
@@ -89,8 +115,10 @@ class AplikasiKedeController extends Controller
      * @param  \App\Models\AplikasiKede  $aplikasiKede
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AplikasiKede $aplikasiKede)
+    public function destroy(AplikasiKede $aplikasiKede, $id)
     {
-        //
+        $aplikasiKede = AplikasiKede::find($id);
+        $aplikasiKede->delete();
+        return redirect()->back();
     }
 }

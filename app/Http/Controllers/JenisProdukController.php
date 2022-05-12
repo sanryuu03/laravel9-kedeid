@@ -14,9 +14,11 @@ class JenisProdukController extends Controller
      */
     public function index()
     {
+        $gambarProduk = JenisProduk::get();
         return view('admin/landingpagejenisproduk', [
             "title" => "Sangrid - landingpagejenisproduk",
-            "creator" => "San"
+            "creator" => "San",
+            "gambarProduk" => $gambarProduk,
         ]);
     }
 
@@ -38,7 +40,29 @@ class JenisProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'caption' => 'required',
+            'picture_path' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+
+        ]);
+
+        // menyimpan data file yang diupload ke variabel $file
+        $file = $request->file('picture_path');
+        // dd($request->file('picture_path'));
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'storage';
+
+        // upload file
+        $file->move($tujuan_upload, $nama_file);
+
+        JenisProduk::create([
+            "caption" => $data['caption'],
+            'picture_path' => $nama_file,
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -81,8 +105,10 @@ class JenisProdukController extends Controller
      * @param  \App\Models\JenisProduk  $jenisProduk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JenisProduk $jenisProduk)
+    public function destroy(JenisProduk $jenisProduk, $id)
     {
-        //
+        $jenisProduk = JenisProduk::find($id);
+        $jenisProduk->delete();
+        return redirect()->back();
     }
 }

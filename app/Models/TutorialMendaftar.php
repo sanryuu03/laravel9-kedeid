@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TutorialMendaftar extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['header','link_youtube'];
 }

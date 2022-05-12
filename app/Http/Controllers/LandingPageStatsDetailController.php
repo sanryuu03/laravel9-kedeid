@@ -14,9 +14,11 @@ class LandingPageStatsDetailController extends Controller
      */
     public function index()
     {
+        $statsDetail = LandingPageStatsDetail::take(7)->get();
         return view('admin/landingpagestatsdetail', [
             "title" => "Sangrid - landingpagestatsdetail",
-            "creator" => "San"
+            "creator" => "San",
+            "statsDetail" => $statsDetail,
         ]);
     }
 
@@ -38,7 +40,13 @@ class LandingPageStatsDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'caption_kiri' => 'required',
+            'caption_tengah' => 'required',
+            'caption_kanan' => 'required',
+        ]);
+        LandingPageStatsDetail::create($data);
+        return redirect()->route('stats.detail');
     }
 
     /**
@@ -84,5 +92,12 @@ class LandingPageStatsDetailController extends Controller
     public function destroy(LandingPageStatsDetail $landingPageStatsDetail)
     {
         //
+    }
+
+    public function delete($id)
+    {
+        $statsDetail = LandingPageStatsDetail::find($id);
+        $statsDetail->delete();
+        return redirect()->back();
     }
 }

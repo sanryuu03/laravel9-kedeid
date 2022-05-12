@@ -10,26 +10,53 @@
               <li class="breadcrumb-item active" aria-current="page">Landing Tutorial wallet</li>
           </ol>
       </div>
-
-      <div class="form-group">
-          <label>Header</label>
-          <input type="text" name="bidang_keahlian" class="form-control" value="<?= @$row->bidang_keahlian ?>">
-      </div>
-
-      <div class="form-group">
-          <label>Masukkan Link Youtube</label>
-          <input type="text" name="pendidikan_akhir" class="form-control" value="<?= @$row->pendidikan_akhir ?>">
-      </div>
-
   </div>
 
 
-    <div class="container-fluid">
-    	<form method="post" action="" enctype="multipart/form-data">
-    		{{-- <?php $this->load->view('pegawai/form',@$row,@$combostatus) ?> --}}
+  <div class="container-fluid">
+      <form method="post" action="{{ route('tutorialwallet.post') }}" enctype="multipart/form-data">
+          {{ csrf_field() }}
+          <div class="form-group">
+              <label>Header</label>
+              <input type="text" name="header" class="form-control">
+          </div>
 
-    		<button type="submit" class="btn btn-primary mt-3">Save</button>
-    	</form>
-</div>
+          <div class="form-group">
+              <label>Masukkan Link Youtube</label>
+              <input type="text" name="link_youtube" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">Save</button>
+      </form>
+  </div>
+
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+          <thead>
+              <tr>
+                  <th width="1%">Header</th>
+                  <th width="1%">Link Youtube</th>
+                  <th width="1%">Created At</th>
+                  <th width="1%">Aksi</th>
+              </tr>
+          </thead>
+          <tbody>
+              @foreach($tutorialWallet as $item)
+              <tr>
+                  <td>{{ $item->header }}</td>
+                  <td>{{ $item->link_youtube }}</td>
+                  <td>{{ $item->created_at }}</td>
+                  <td>
+                      <form action="{{ route('tutorialwallet.destroy', $item ->id) }}" method="POST" class="inline-block">
+                          {!! method_field('post') . csrf_field() !!}
+                          <button type="submit" class="btn btn-danger">
+                              Delete
+                          </button>
+                      </form>
+                  </td>
+              </tr>
+              @endforeach
+          </tbody>
+      </table>
+  </div>
   <!---Container Fluid-->
   @endsection

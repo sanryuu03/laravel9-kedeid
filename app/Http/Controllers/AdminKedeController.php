@@ -61,11 +61,6 @@ class AdminKedeController extends Controller
             'password' => 'required',
         ]);
 
-        // jika belum login
-        if(auth()->check()){
-            return redirect()->intended('/admin/login');
-            // If the user only authenticated
-          }
         // jika berhasil loginkan
         if (Auth::attempt(['name' => $request->name, 'password' => $request->password])) {
             $request->session()->regenerate();

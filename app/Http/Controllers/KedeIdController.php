@@ -14,9 +14,11 @@ class KedeIdController extends Controller
      */
     public function index()
     {
+        $kedePromo = KedeId::get();
         return view('admin/kedeid', [
             "title" => "Sangrid - kedeid",
-            "creator" => "San"
+            "creator" => "San",
+            "kedePromo" => $kedePromo,
         ]);
     }
 
@@ -46,7 +48,29 @@ class KedeIdController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'poster' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+            'link_poster' => 'required',
+
+        ]);
+
+        // menyimpan data file yang diupload ke variabel $file
+        $file = $request->file('poster');
+        // dd($request->file('poster'));
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'storage';
+
+        // upload file
+        $file->move($tujuan_upload, $nama_file);
+
+        KedeId::create([
+            "link_poster" => $data['link_poster'],
+            'poster' => $nama_file,
+        ]);
+
+        return redirect()->route('kedeid');
     }
 
     /**
@@ -89,8 +113,10 @@ class KedeIdController extends Controller
      * @param  \App\Models\KedeId  $kedeId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KedeId $kedeId)
+    public function destroy(KedeId $kedeId, $id)
     {
-        //
+        $kedeId = KedeId::find($id);
+        $kedeId->delete();
+        return redirect()->back();
     }
 }

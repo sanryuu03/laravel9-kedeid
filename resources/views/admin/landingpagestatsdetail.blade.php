@@ -10,31 +10,59 @@
               <li class="breadcrumb-item active" aria-current="page">Landing stats detail</li>
           </ol>
       </div>
+      <form method="post" action="{{ route('stats.post') }}" enctype="multipart/form-data">
+          {{ csrf_field() }}
 
       <div class="form-group">
           <label>Caption Kiri</label>
-          <input type="text" name="bidang_keahlian" class="form-control" value="<?= @$row->bidang_keahlian ?>">
+          <input type="text" name="caption_kiri" class="form-control">
       </div>
 
       <div class="form-group">
           <label>Caption Tengah</label>
-          <input type="text" name="pendidikan_akhir" class="form-control" value="<?= @$row->pendidikan_akhir ?>">
+          <input type="text" name="caption_tengah" class="form-control">
       </div>
 
       <div class="form-group">
           <label>Caption Kanan</label>
-          <input type="text" name="keterangan" class="form-control" value="<?= @$row->keterangan ?>">
+          <input type="text" name="caption_kanan" class="form-control">
       </div>
-
   </div>
 
 
-    <div class="container-fluid">
-    	<form method="post" action="" enctype="multipart/form-data">
-    		{{-- <?php $this->load->view('pegawai/form',@$row,@$combostatus) ?> --}}
+  <div class="container-fluid">
+          <button type="submit" class="btn btn-primary mt-3">Save</button>
+  </div>
+      </form>
 
-    		<button type="submit" class="btn btn-primary mt-3">Save</button>
-    	</form>
-</div>
+  <div class="card-body">
+      <table class="table table-bordered table-striped">
+          <thead>
+              <tr>
+                  <th width="1%">Caption Kiri</th>
+                  <th width="1%">Caption Tengah</th>
+                  <th width="1%">Caption Kanan</th>
+                  <th width="1%">Aksi</th>
+              </tr>
+          </thead>
+          <tbody>
+          @foreach($statsDetail as $item)
+              <tr>
+                  <td>{{ $item->caption_kiri }}</td>
+                  <td>{{ $item->caption_tengah }}</td>
+                  <td>{{ $item->caption_kanan }}</td>
+                  <td>
+                      <form action="{{ route('stats.delete', $item ->id) }}" method="POST" class="inline-block">
+                      {!! method_field('post') . csrf_field() !!}
+                      <button type="submit" class="btn btn-danger">
+                                              Delete
+                                          </button>
+                      </form>
+                  </td>
+              </tr>
+              @endforeach
+          </tbody>
+      </table>
+  </div>
   <!---Container Fluid-->
   @endsection

@@ -16,6 +16,8 @@ return new class extends Migration
     {
         Schema::create('jenis_produks', function (Blueprint $table) {
             $table->id();
+            $table->text('caption')->nullable();
+            $table->text('picture_path')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });

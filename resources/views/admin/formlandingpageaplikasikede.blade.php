@@ -11,38 +11,30 @@
           </ol>
       </div>
 
-      <div class="form-group">
-          <label>Header</label>
-          <input type="text" name="bidang_keahlian" class="form-control" value="<?= @$row->bidang_keahlian ?>">
+
+
+      <div class="container-fluid">
+          <form method="post" action="{{ route('aplikasikede.post') }}" enctype="multipart/form-data">
+              {{ csrf_field() }}
+
+              <div class="form-group">
+                  <label>Header</label>
+                  <input type="text" name="header" class="form-control" value="<?= @$row->bidang_keahlian ?>">
+              </div>
+              <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" name="title" class="form-control" value="<?= @$row->bidang_keahlian ?>">
+              </div>
+              <div class="form-group">
+                  <label>Caption</label>
+                  <input type="text" name="caption" class="form-control" value="<?= @$row->bidang_keahlian ?>">
+              </div>
+
+
+              <label>Foto</label>
+              <br>
+              <input type="file" name="picture_path" class="form-control">
+              <button type="submit" class="btn btn-primary mt-3">Save</button>
+          </form>
       </div>
-      <div class="form-group">
-          <label>Title</label>
-          <input type="text" name="bidang_keahlian" class="form-control" value="<?= @$row->bidang_keahlian ?>">
-      </div>
-      <div class="form-group">
-          <label>Caption</label>
-          <input type="text" name="bidang_keahlian" class="form-control" value="<?= @$row->bidang_keahlian ?>">
-      </div>
-
-
-      <label>Foto</label>
-      <?php
-      if (@$row->nama) {
-    ?>
-      <input type="hidden" name="foto_old" value="<?= @$row->foto ?>">
-      <br>
-      <img src="<?= base_url('uploads/pegawai/'.$row->foto) ?>" class="img-fluid" width="150">
-      <br><br>
-      <?php } ?>
-      <input type="file" name="foto" class="form-control">
-  </div>
-
-
-  <div class="container-fluid">
-      <form method="post" action="" enctype="multipart/form-data">
-          {{-- <?php $this->load->view('pegawai/form',@$row,@$combostatus) ?> --}}
-
-          <button type="submit" class="btn btn-primary mt-3">Save</button>
-      </form>
-  </div>
-  @endsection
+      @endsection

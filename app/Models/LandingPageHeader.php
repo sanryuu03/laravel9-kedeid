@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LandingPageHeader extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['picture_path'];
 }

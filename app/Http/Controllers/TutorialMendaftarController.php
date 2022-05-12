@@ -14,9 +14,11 @@ class TutorialMendaftarController extends Controller
      */
     public function index()
     {
+        $tutorialBelanja = TutorialMendaftar::get();
         return view('admin/tutorialmendaftar', [
             "title" => "Sangrid - tutorialbelanja",
-            "creator" => "San"
+            "creator" => "San",
+            "tutorialBelanja" => $tutorialBelanja,
         ]);
     }
 
@@ -38,7 +40,12 @@ class TutorialMendaftarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'header' => 'required',
+            'link_youtube' => 'required',
+        ]);
+        TutorialMendaftar::create($data);
+        return redirect()->route('tutorialmendaftar');
     }
 
     /**
@@ -81,8 +88,10 @@ class TutorialMendaftarController extends Controller
      * @param  \App\Models\TutorialMendaftar  $tutorialMendaftar
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TutorialMendaftar $tutorialMendaftar)
+    public function destroy(TutorialMendaftar $tutorialMendaftar, $id)
     {
-        //
+        $tutorialMendaftar = TutorialMendaftar::find($id);
+        $tutorialMendaftar->delete();
+        return redirect()->back();
     }
 }
